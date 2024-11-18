@@ -1,0 +1,66 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "close",
+            "type": "shell",
+            "command": "cmd.exe",
+            "args": [
+                "/c",
+                "tasklist | findstr /I \"app.exe\" >nul && echo Found && taskkill /F /IM app.exe || echo Not running"
+            ],
+            "problemMatcher": [],
+            "group": "build",
+            "runOptions": {
+                "runOn": "folderOpen"
+            },
+            "presentation": {
+                "reveal": "silent",
+                "panel": "shared"
+            }
+        },
+        {
+            "label": "build",
+            "type": "shell",
+            "command": "g++",
+            "args": [
+                "-o",
+                "app",
+                "main.cpp",
+                "-mwindows",
+                "-DUNICODE",
+                "-D_UNICODE",
+                "-municode",
+                "-lstdc++",
+                //"-llua"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "dependsOn": "close",
+            "problemMatcher": ["$gcc"],
+            "presentation": {
+                "reveal": "silent",
+                "panel": "shared"
+            }
+        },
+        {
+            "label": "run",
+            "type": "shell",
+            "command": "cmd",
+            "args": [
+                "/c",
+                "start",
+                "app.exe"
+            ],
+            "group": "none",
+            "dependsOn": "build",
+            "problemMatcher": [],
+            "presentation": {
+                "reveal": "silent",
+                "panel": "shared"
+            }
+        }
+    ]
+}
